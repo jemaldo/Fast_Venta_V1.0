@@ -1,16 +1,18 @@
 
 export type Role = 'ADMIN' | 'MANAGER' | 'CASHIER';
 export type CreditStatus = 'ACTIVE' | 'PAID' | 'OVERDUE' | 'PLAN_SEPARE';
+export type SaleStatus = 'COMPLETED' | 'VOIDED' | 'RETURNED';
 
 export interface User {
   id: string;
   name: string;
   username: string;
-  password?: string; // Campo para contraseña
-  securityQuestion?: string; // Pregunta secreta
-  securityAnswer?: string; // Respuesta secreta
+  password?: string;
+  securityQuestion?: string;
+  securityAnswer?: string;
   role: Role;
   permissions: string[];
+  active?: boolean; // Campo para estado de cuenta
 }
 
 export interface Product {
@@ -31,6 +33,13 @@ export interface SaleItem {
   name: string;
   quantity: number;
   price: number;
+  returnedQuantity?: number;
+}
+
+export interface CardDetails {
+  brand: string;
+  lastFour: string;
+  authCode: string;
 }
 
 export interface Sale {
@@ -43,7 +52,9 @@ export interface Sale {
   total: number;
   customerId?: string;
   paymentMethod: 'EFECTIVO' | 'TARJETA' | 'TRANSFERENCIA' | 'CREDITO_PERSONAL';
+  cardDetails?: CardDetails; // Detalles de la transacción con tarjeta
   userId: string;
+  status?: SaleStatus;
 }
 
 export interface CreditPayment {
